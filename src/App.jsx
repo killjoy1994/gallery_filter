@@ -1,36 +1,40 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css'
-import { useState } from 'react';
 import Movie from './Movie';
+import Filter from './components/Filter';
+import useFetch from './hooks/useFetch';
 
 function App() {
+  const [filtered, setFiltered] = useState([])
+  const [activeGenre, setActiveGenre] = useState(0)
 
-  const [popular, setPopular] = useState([])
-
-  const fetchPopular = async () => {
-    const options = {
-      method: 'GET',
-      headers: {
-        accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmNTIyYzg3ZDYyZDI4ODUxN2E0NTZiNTNkYzg1OGU3YSIsInN1YiI6IjY0ODYzMTJhOTkyNTljMDBmZjBmNDEwOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.oLa38gcYrg_U1IHxnS32SBtBCyx4IMKkVC7bLtor9xU'
-      }
-    };
-    const data = await fetch("https://api.themoviedb.org/3/movie/popular?language=en-US&page=1", options)
-    const movies = await data.json()
-    console.log("DATA: ", movies)
-    setPopular(movies.results)
-  }
+  const config = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmNTIyYzg3ZDYyZDI4ODUxN2E0NTZiNTNkYzg1OGU3YSIsInN1YiI6IjY0ODYzMTJhOTkyNTljMDBmZjBmNDEwOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.oLa38gcYrg_U1IHxnS32SBtBCyx4IMKkVC7bLtor9xU'
+    }
+    }
+  const {data, loading, error} = useFetch("https://api.themoviedb.org/3/movie/popular?language=en-US&page=1", config)
+  const movieData = data?.results
 
   useEffect(() => {
-    fetchPopular()
-  }, [])
+    if(movieData) {
+      setFiltered(movieData)
+    }
+  }, [movieData])
+
+  console.log(movieData)
 
   return (
-    <div className='flex justify-center items-center flex-col'>
-      {popular.map(data => {
-        return <Movie key={data.id} movie={data} />
+   <div>
+    <Filter />
+    <div className='grid justify-center items-center md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 py-6 gap-3 md:gap-y-12 container mx-auto'>
+      {movieData?.map(movie => {
+        return <Movie key={movie.id} movie={movie} />
       })}
     </div>
+   </div>
   )
 }
 
