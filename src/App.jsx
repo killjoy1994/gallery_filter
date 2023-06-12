@@ -29,7 +29,7 @@ function App() {
   return (
    <div className='container mx-auto min-w-screen pt-20 px-9'>
     <Filter />
-    <div className='grid justify-center items-center md:grid-cols-2 lg:grid-cols-4 py-6 gap-3 mt-12 md:gap-y-12 '>
+    <div className='grid justify-center items-center md:grid-cols-2 lg:grid-cols-4 py-6 gap-5 mt-12 md:gap-y-12 '>
       {movieData?.map(movie => {
         return <Movie key={movie.id} movie={movie} />
       })}
