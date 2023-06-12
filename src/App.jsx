@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.css'
 import Movie from './Movie';
 import Filter from './components/Filter';
+import { motion, AnimatePresence } from 'framer-motion';
 
 function App() {
   const [movies, setMovies] = useState([])
@@ -44,15 +45,17 @@ function App() {
     console.log(movies)
 
   return (
-   <div className='container mx-auto min-w-screen pt-20 px-9'>
+   <div className='container mx-auto min-w-screen pt-8 pb-20 px-9'>
     {loading ? <h1>Loading....</h1> : (
       <>
         <Filter movies={movies} setFilteredMovies={setFilteredMovies} activeGenre={activeGenre} setActiveGenre={setActiveGenre} />
-        <div className='grid justify-center items-center sm:grid-cols-2 lg:grid-cols-4 py-6 gap-5 mt-12 md:gap-y-6 '>
-          {filteredMovies?.map(movie => {
-            return <Movie key={movie.id} movie={movie} />
-          })}
-        </div>
+        <motion.div layout className='grid justify-center items-center xl:grid-cols-5 sm:grid-cols-2 lg:grid-cols-4 py-6 gap-5 mt-12 md:gap-y-6 '>
+          <AnimatePresence>
+            {filteredMovies?.map(movie => {
+              return <Movie key={movie.id} movie={movie} />
+            })}
+          </AnimatePresence>
+        </motion.div>
       </>
     )}
    </div>
