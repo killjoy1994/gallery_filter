@@ -19,7 +19,7 @@ function App() {
     headers: {
       accept: "application/json",
       Authorization:
-        "Bearer " + "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmNTIyYzg3ZDYyZDI4ODUxN2E0NTZiNTNkYzg1OGU3YSIsInN1YiI6IjY0ODYzMTJhOTkyNTljMDBmZjBmNDEwOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.oLa38gcYrg_U1IHxnS32SBtBCyx4IMKkVC7bLtor9xU",
+        "Bearer " + import.meta.env.VITE_TOKEN,
     },
   };
 
